@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Sentry Push — MindMap &amp; SMART-цели</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg: #14171a;
+    --panel: #1b1f23;
+    --panel-2: #20252a;
+    --line: #2c3238;
+    --text: #e9e7e1;
+    --muted: #8b9299;
+    --green: #5fb567;
+    --red: #d1685f;
+    --amber: #d4a24c;
+    --blue: #6c9bd1;
+    --violet: #a68bcc;
+    --teal: #5bb0a6;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 15% 10%, #1a2e1d 0%, transparent 40%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    padding:56px 24px 80px;
+  }
+  .wrap{max-width:1120px;margin:0 auto;}
+
+  header{margin-bottom:48px;}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--green);}
+  .tag::before{content:'$ ';color:var(--muted);}
+  h1{font-size:34px;line-height:1.15;margin:10px 0 12px;font-weight:700;letter-spacing:-0.01em;}
+  header p{color:var(--muted);font-size:15.5px;line-height:1.6;max-width:660px;margin:0;}
+
+  section.block{margin-bottom:64px;}
+  .section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:26px;border-bottom:1px solid var(--line);padding-bottom:14px;}
+  .section-head h2{font-size:20px;margin:0;font-weight:700;}
+  .section-head span{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);}
+
+  /* ---- MIND MAP ---- */
+  .map-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;overflow-x:auto;}
+  svg{display:block;min-width:1200px;width:100%;height:auto;}
+  .core-text{font-family:'Inter',sans-serif;font-weight:800;fill:#fff;}
+  .branch-title{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;}
+  .branch-q{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-style:italic;}
+  .leaf-text{font-family:'IBM Plex Mono',monospace;fill:var(--text);font-size:12px;}
+  .leaf-box{fill:var(--panel-2);stroke:var(--line);stroke-width:1;}
+
+  /* ---- SMART GOALS ---- */
+  .timeline-bar{
+    display:flex; align-items:center; gap:0;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:18px 22px; margin-bottom:28px; font-family:'IBM Plex Mono',monospace; font-size:12px;
+  }
+  .tl-seg{flex:1; position:relative; padding-top:22px; text-align:center; color:var(--muted);}
+  .tl-seg::before{content:'';position:absolute; top:6px; left:0; right:0; height:4px; border-radius:2px;}
+  .tl-seg.m1::before{background:var(--green);}
+  .tl-seg.m2::before{background:var(--blue);}
+  .tl-seg b{display:block; color:var(--text); font-size:12.5px; margin-bottom:2px;}
+
+  .goal{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:20px;overflow:hidden;}
+  .goal-top{display:flex;align-items:center;gap:10px;padding:16px 20px;background:var(--panel-2);border-bottom:1px solid var(--line);}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .dot.g{background:var(--green);box-shadow:0 0 8px rgba(95,181,103,.6);}
+  .dot.b{background:var(--blue);box-shadow:0 0 8px rgba(108,155,209,.6);}
+  .goal-top strong{font-size:14.5px;}
+  .goal-top .due{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);background:rgba(212,162,76,.1);border:1px solid rgba(212,162,76,.3);padding:3px 9px;border-radius:5px;white-space:nowrap;}
+  .goal-body{padding:20px;}
+  .goal-body .statement{font-size:15px;line-height:1.65;color:var(--text);margin:0 0 18px;padding:14px 16px;background:var(--bg);border-left:3px solid var(--green);border-radius:0 6px 6px 0;}
+  .bad{font-size:13px;color:var(--muted);margin:0 0 16px;font-family:'IBM Plex Mono',monospace;}
+  .bad .x{color:var(--red);margin-right:6px;}
+  .criteria{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;}
+  .crit{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:11px 12px;}
+  .crit .k{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--green);display:block;margin-bottom:5px;}
+  .crit .v{font-size:12.5px;color:var(--muted);line-height:1.45;}
+
+  .sprints{border-top:1px solid var(--line); padding-top:16px;}
+  .sprints h4{font-size:12px;text-transform:none;color:var(--muted);margin:0 0 12px;font-family:'IBM Plex Mono',monospace;}
+  .sprint-row{display:flex;gap:14px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line);}
+  .sprint-row:last-child{border-bottom:none;}
+  .sprint-date{flex:none;width:150px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);}
+  .sprint-desc{font-size:13px;color:var(--text);line-height:1.5;}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;font-family:'IBM Plex Mono',monospace;margin-top:56px;}
+
+  @media (max-width:720px){.criteria{grid-template-columns:1fr 1fr;} h1{font-size:26px;} .sprint-date{width:110px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="tag">project --init</div>
+    <h1>Перехватчик чувствительных данных<br>для git push и AI-агентов</h1>
+    <p>Mind map и SMART-цели для утилиты, которая проверяет push-запросы и запросы к агенту на утечки секретов перед их отправкой — и либо одобряет, либо приостанавливает с уведомлением разработчика.</p>
+  </header>
+
+  <section class="block">
+    <div class="section-head">
+      <h2>Mind Map</h2>
+      <span>структура проекта: ядро → ветки → ответвления второго уровня</span>
+    </div>
+    <div class="map-card">
+      <svg viewBox="0 0 1600 1500" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- ===== connector lines: core -> branch hubs ===== -->
+        <g stroke-width="2.5" fill="none" opacity="0.6">
+          <path d="M800,750 C700,650 560,540 400,430"  stroke="#5fb567"/>
+          <path d="M800,750 C720,600 660,440 620,290"  stroke="#6c9bd1"/>
+          <path d="M800,750 C880,600 940,440 980,290"  stroke="#a68bcc"/>
+          <path d="M800,750 C900,650 1040,540 1200,430" stroke="#d4a24c"/>
+          <path d="M800,750 C720,900 580,1030 420,1130" stroke="#d1685f"/>
+          <path d="M800,750 C900,900 1060,1030 1220,1130" stroke="#5bb0a6"/>
+        </g>
+
+        <!-- ===== CORE ===== -->
+        <ellipse cx="800" cy="750" rx="140" ry="62" fill="#20252a" stroke="#e9e7e1" stroke-width="2"/>
+        <text x="800" y="742" text-anchor="middle" class="core-text" font-size="16">Sentry Push</text>
+        <text x="800" y="764" text-anchor="middle" class="core-text" font-size="11" fill="#8b9299" font-weight="500">перехват · проверка · решение</text>
+
+        <!-- =========================================================
+             BRANCH 1 — Функции (green) — top-left
+        ========================================================== -->
+        <g>
+          <rect x="290" y="395" width="220" height="44" rx="8" fill="#5fb567"/>
+          <text x="400" y="416" text-anchor="middle" class="branch-title" fill="#14171a">Функции</text>
+          <text x="400" y="429" text-anchor="middle" class="branch-q" fill="#0f1a10">Что умеет продукт?</text>
+
+          <!-- level-2 leaves: vertical list, own connector ticks -->
+          <g>
+            <line x1="290" y1="417" x2="80" y2="230" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="205" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="226" class="leaf-text">Перехват pre-push hook</text>
+          </g>
+          <g>
+            <line x1="290" y1="405" x2="80" y2="270" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="253" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="274" class="leaf-text">Перехват запроса к MCP-агенту</text>
+          </g>
+          <g>
+            <line x1="290" y1="410" x2="80" y2="318" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="301" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="322" class="leaf-text">Детект секретов (regex+entropy)</text>
+          </g>
+          <g>
+            <line x1="290" y1="420" x2="80" y2="366" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="349" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="370" class="leaf-text">Детект PII</text>
+          </g>
+          <g>
+            <line x1="290" y1="428" x2="80" y2="414" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="397" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="418" class="leaf-text">Решение: approve / hold / reject</text>
+          </g>
+          <g>
+            <line x1="290" y1="436" x2="80" y2="462" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="445" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="466" class="leaf-text">Уведомления (Slack / CLI)</text>
+          </g>
+          <g>
+            <line x1="290" y1="439" x2="80" y2="510" stroke="#5fb567" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="493" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="514" class="leaf-text">Whitelist / ignore-правила</text>
+          </g>
+        </g>
+
+        <!-- =========================================================
+             BRANCH 2 — Целевая аудитория (blue) — top, left-of-center
+        ========================================================== -->
+        <g>
+          <rect x="510" y="245" width="220" height="44" rx="8" fill="#6c9bd1"/>
+          <text x="620" y="266" text-anchor="middle" class="branch-title" fill="#14171a">Целевая аудитория</text>
+          <text x="620" y="279" text-anchor="middle" class="branch-q" fill="#0e2438">Кто пользователи?</text>
+
+          <g>
+            <line x1="560" y1="245" x2="480" y2="120" stroke="#6c9bd1" stroke-width="1.3" opacity="0.5"/>
+            <rect x="360" y="95" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="375" y="116" class="leaf-text">DevSecOps-инженеры</text>
+          </g>
+          <g>
+            <line x1="600" y1="245" x2="600" y2="170" stroke="#6c9bd1" stroke-width="1.3" opacity="0.5"/>
+            <rect x="480" y="145" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="495" y="166" class="leaf-text">Команды с compliance-требов.</text>
+          </g>
+          <g>
+            <line x1="680" y1="245" x2="760" y2="145" stroke="#6c9bd1" stroke-width="1.3" opacity="0.5"/>
+            <rect x="645" y="120" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="660" y="141" class="leaf-text">Стартапы без security-команды</text>
+          </g>
+        </g>
+
+        <!-- =========================================================
+             BRANCH 3 — Платформы (violet) — top, right-of-center
+        ========================================================== -->
+        <g>
+          <rect x="870" y="245" width="220" height="44" rx="8" fill="#a68bcc"/>
+          <text x="980" y="266" text-anchor="middle" class="branch-title" fill="#1c1428">Платформы</text>
+          <text x="980" y="279" text-anchor="middle" class="branch-q" fill="#1c1428">Где будет работать?</text>
+
+          <g>
+            <line x1="920" y1="245" x2="920" y2="170" stroke="#a68bcc" stroke-width="1.3" opacity="0.5"/>
+            <rect x="800" y="145" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="815" y="166" class="leaf-text">CLI (Linux / macOS / Windows)</text>
+          </g>
+          <g>
+            <line x1="1000" y1="245" x2="1040" y2="120" stroke="#a68bcc" stroke-width="1.3" opacity="0.5"/>
+            <rect x="920" y="95" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="935" y="116" class="leaf-text">CI/CD-pipeline (GH Actions, GitLab)</text>
+          </g>
+          <g>
+            <line x1="1050" y1="255" x2="1200" y2="150" stroke="#a68bcc" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1085" y="125" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="1100" y="146" class="leaf-text">Плагин IDE (VS Code / JetBrains)</text>
+          </g>
+        </g>
+
+        <!-- =========================================================
+             BRANCH 4 — Конкуренты (amber) — top-right
+        ========================================================== -->
+        <g>
+          <rect x="1090" y="395" width="220" height="44" rx="8" fill="#d4a24c"/>
+          <text x="1200" y="416" text-anchor="middle" class="branch-title" fill="#14171a">Конкуренты</text>
+          <text x="1200" y="429" text-anchor="middle" class="branch-q" fill="#2b1f08">Кто уже есть на рынке?</text>
+
+          <g>
+            <line x1="1310" y1="410" x2="1520" y2="230" stroke="#d4a24c" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="205" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="226" class="leaf-text">GitGuardian</text>
+          </g>
+          <g>
+            <line x1="1310" y1="405" x2="1520" y2="270" stroke="#d4a24c" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="253" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="274" class="leaf-text">TruffleHog</text>
+          </g>
+          <g>
+            <line x1="1310" y1="410" x2="1520" y2="318" stroke="#d4a24c" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="301" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="322" class="leaf-text">Gitleaks</text>
+          </g>
+          <g>
+            <line x1="1310" y1="420" x2="1520" y2="366" stroke="#d4a24c" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="349" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="370" class="leaf-text">Snyk (частично)</text>
+          </g>
+          <g>
+            <line x1="1310" y1="428" x2="1520" y2="414" stroke="#d4a24c" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="397" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="418" class="leaf-text">Наше отличие: фокус на AI-агентов</text>
+          </g>
+        </g>
+
+        <!-- =========================================================
+             BRANCH 5 — Монетизация (red) — bottom-left
+        ========================================================== -->
+        <g>
+          <rect x="290" y="1065" width="220" height="44" rx="8" fill="#d1685f"/>
+          <text x="400" y="1086" text-anchor="middle" class="branch-title" fill="#14171a">Монетизация</text>
+          <text x="400" y="1099" text-anchor="middle" class="branch-q" fill="#2c0f0b">Как будет зарабатывать?</text>
+
+          <g>
+            <line x1="290" y1="1090" x2="80" y2="1000" stroke="#d1685f" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="983" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="1004" class="leaf-text">Open-source core + Enterprise</text>
+          </g>
+          <g>
+            <line x1="290" y1="1100" x2="80" y2="1048" stroke="#d1685f" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="1031" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="1052" class="leaf-text">SaaS-подписка на дашборд</text>
+          </g>
+          <g>
+            <line x1="290" y1="1109" x2="80" y2="1096" stroke="#d1685f" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="1079" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="1100" class="leaf-text">Freemium: кастомные политики</text>
+          </g>
+          <g>
+            <line x1="290" y1="1109" x2="80" y2="1144" stroke="#d1685f" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="1127" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="30" y="1148" class="leaf-text">Интеграции по подписке</text>
+          </g>
+        </g>
+
+        <!-- =========================================================
+             BRANCH 6 — Технологии (teal) — bottom-right
+        ========================================================== -->
+        <g>
+          <rect x="1090" y="1065" width="220" height="44" rx="8" fill="#5bb0a6"/>
+          <text x="1200" y="1086" text-anchor="middle" class="branch-title" fill="#0b201d">Технологии</text>
+          <text x="1200" y="1099" text-anchor="middle" class="branch-q" fill="#0b201d">Как мы это сделаем?</text>
+
+          <g>
+            <line x1="1310" y1="1090" x2="1520" y2="1000" stroke="#5bb0a6" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="983" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="1004" class="leaf-text">Go / Python / Rust</text>
+          </g>
+          <g>
+            <line x1="1310" y1="1100" x2="1520" y2="1048" stroke="#5bb0a6" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="1031" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="1052" class="leaf-text">Regex + entropy-анализ</text>
+          </g>
+          <g>
+            <line x1="1310" y1="1109" x2="1520" y2="1096" stroke="#5bb0a6" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1310" y="1079" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="1100" class="leaf-text">ML-классификатор (v2)</text>
+          </g>
+          <g>
+            <line x1="1310" y1="1109" x2="1520" y2="1144" stroke="#5bb0a6" stroke-width="1.3" opacity="0.5"/>
+            <rect x="15" y="0" width="0" height="0"/>
+            <rect x="1310" y="1127" class="leaf-box" width="270" height="34" rx="6"/>
+            <text x="1325" y="1148" class="leaf-text">Git hooks API, MCP-прокси</text>
+          </g>
+          <g>
+            <line x1="1200" y1="1109" x2="1200" y2="1192" stroke="#5bb0a6" stroke-width="1.3" opacity="0.5"/>
+            <rect x="1080" y="1175" class="leaf-box" width="240" height="34" rx="6"/>
+            <text x="1095" y="1196" class="leaf-text">YAML/JSON конфиги правил</text>
+          </g>
+        </g>
+
+      </svg>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="section-head">
+      <h2>SMART-цели</h2>
+      <span>рассчитано на окно: сентябрь 2026 — декабрь 2026 (4 месяца, 17 недель)</span>
+    </div>
+
+    <div class="timeline-bar">
+      <div class="tl-seg m1"><b>01.09 – 31.10.2026</b>Этап 1 · MVP pre-push hook (8 недель)</div>
+      <div class="tl-seg m2"><b>01.11 – 31.12.2026</b>Этап 2 · Прокси для AI-агента (8–9 недель)</div>
+    </div>
+
+    <div class="goal">
+      <div class="goal-top">
+        <span class="dot g"></span>
+        <strong>Цель №1 — MVP git pre-push hook</strong>
+        <span class="due">01.09 – 31.10.2026</span>
+      </div>
+      <div class="goal-body">
+        <p class="statement">Разработать и выпустить в open-source (GitHub) MVP CLI-утилиты в виде git pre-push hook, которая проверяет коммиты на 5 базовых типов чувствительных данных (API-ключи, пароли, приватные ключи, email, токены облачных провайдеров) с точностью не менее 90% на тестовом датасете из 200 размеченных примеров и уведомляет разработчика в терминале и через Slack-webhook — до 31 октября 2026 года, чтобы получить не менее 50 звёзд на GitHub и 10 команд-пилотов в первый месяц.</p>
+        <div class="criteria">
+          <div class="crit"><span class="k">S</span><span class="v">CLI-утилита, pre-push hook, 5 типов данных, Slack-уведомления</span></div>
+          <div class="crit"><span class="k">M</span><span class="v">точность ≥90% / 200 примеров, 50★, 10 пилотов</span></div>
+          <div class="crit"><span class="k">A</span><span class="v">только regex+entropy, без ML на старте</span></div>
+          <div class="crit"><span class="k">R</span><span class="v">закрывает боль утечек секретов в репо</span></div>
+          <div class="crit"><span class="k">T</span><span class="v">8 недель, до 31.10.2026</span></div>
+        </div>
+        <div class="sprints">
+          <h4>// разбивка по спринтам</h4>
+          <div class="sprint-row"><div class="sprint-date">01.09 – 14.09</div><div class="sprint-desc">Проектирование правил детекции (regex + entropy-паттерны), архитектура pre-push hook.</div></div>
+          <div class="sprint-row"><div class="sprint-date">15.09 – 28.09</div><div class="sprint-desc">Реализация ядра проверки + сборка тестового датасета (200 примеров).</div></div>
+          <div class="sprint-row"><div class="sprint-date">29.09 – 12.10</div><div class="sprint-desc">Интеграция approve/hold/reject-логики, уведомления в CLI и Slack.</div></div>
+          <div class="sprint-row"><div class="sprint-date">13.10 – 24.10</div><div class="sprint-desc">Тестирование точности (цель ≥90%), исправление ложных срабатываний.</div></div>
+          <div class="sprint-row"><div class="sprint-date">25.10 – 31.10</div><div class="sprint-desc">Релиз MVP на GitHub, запуск с 10 пилотными командами.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal">
+      <div class="goal-top">
+        <span class="dot b"></span>
+        <strong>Цель №2 — прокси-перехват AI-агента</strong>
+        <span class="due">01.11 – 31.12.2026</span>
+      </div>
+      <div class="goal-body">
+        <p class="statement">Реализовать и протестировать прототип прокси-перехватчика запросов к одному AI-агенту (например, Claude Code через MCP) с той же системой детекции чувствительных данных, добиться задержки обработки запроса не более 300 мс и провести тестирование на 3 реальных проектах-пилотах — до 31 декабря 2026 года.</p>
+        <div class="criteria">
+          <div class="crit"><span class="k">S</span><span class="v">прокси для одного MCP-агента, та же детекция</span></div>
+          <div class="crit"><span class="k">M</span><span class="v">задержка ≤300мс, 3 пилотных проекта</span></div>
+          <div class="crit"><span class="k">A</span><span class="v">один агент, переиспользование движка из этапа 1</span></div>
+          <div class="crit"><span class="k">R</span><span class="v">расширяет продукт на запросы к агентам</span></div>
+          <div class="crit"><span class="k">T</span><span class="v">~8.5 недель, до 31.12.2026</span></div>
+        </div>
+        <div class="sprints">
+          <h4>// разбивка по спринтам</h4>
+          <div class="sprint-row"><div class="sprint-date">01.11 – 14.11</div><div class="sprint-desc">Изучение MCP-протокола, проектирование точки перехвата запросов агента.</div></div>
+          <div class="sprint-row"><div class="sprint-date">15.11 – 28.11</div><div class="sprint-desc">Разработка прокси-слоя, переиспользование движка детекции из этапа 1.</div></div>
+          <div class="sprint-row"><div class="sprint-date">29.11 – 12.12</div><div class="sprint-desc">Оптимизация задержки обработки (цель ≤300 мс), нагрузочное тестирование.</div></div>
+          <div class="sprint-row"><div class="sprint-date">13.12 – 24.12</div><div class="sprint-desc">Пилотное тестирование на 3 реальных проектах, сбор обратной связи.</div></div>
+          <div class="sprint-row"><div class="sprint-date">25.12 – 31.12</div><div class="sprint-desc">Финальные правки, подведение итогов этапа, отчёт по проекту.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>sentry-push / mindmap.html — сгенерировано для презентации проекта</footer>
+</div>
+</body>
+</html>

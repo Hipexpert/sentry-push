@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Sentry Push — Декомпозиция проекта (WBS)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#ffffff;
+    color:#14171a;
+    font-family:'Inter',sans-serif;
+    padding:50px 28px 80px;
+  }
+  .wrap{max-width:1480px;margin:0 auto;}
+
+  h1{font-size:34px;font-weight:800;margin:0 0 8px;}
+  .sub{color:#5b6670;font-size:14.5px;margin:0 0 40px;max-width:800px;line-height:1.55;}
+
+  .chart{
+    position:relative;
+    padding-top:10px;
+  }
+
+  /* Project root box */
+  .root-row{
+    display:flex;
+    justify-content:center;
+    margin-bottom:0;
+  }
+  .root-box{
+    background:#e4e6e8;
+    border:1px solid #b9bdc1;
+    border-radius:6px;
+    padding:14px 34px;
+    font-weight:700;
+    font-size:15px;
+    box-shadow:0 2px 3px rgba(0,0,0,.08);
+  }
+
+  /* trunk connecting root to the horizontal bar */
+  .trunk{
+    width:2px; height:22px; background:#333; margin:0 auto;
+  }
+  .hbar{
+    height:2px; background:#333; margin:0 56px;
+  }
+
+  .columns{
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    margin-top:0;
+  }
+
+  .col{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+  }
+  .col-stem{
+    width:2px; height:22px; background:#333;
+  }
+
+  .phase-box{
+    width:100%;
+    text-align:center;
+    padding:12px 8px;
+    border-radius:6px;
+    font-weight:800;
+    font-size:14.5px;
+    color:#1a1a1a;
+    box-shadow:0 2px 3px rgba(0,0,0,.1);
+    border:1px solid rgba(0,0,0,.12);
+  }
+  .phase-init{background:#f4a227;}
+  .phase-plan{background:#f0cb28;}
+  .phase-exec{background:#e274b0;}
+  .phase-ctrl{background:#c3c22a;}
+  .phase-close{background:#c4472b; color:#fff;}
+
+  .items{
+    position:relative;
+    width:100%;
+    margin-top:0;
+    padding-left:14px;
+  }
+  .items::before{
+    content:'';
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:16px;
+    width:2px;
+    background:#333;
+  }
+  .item{
+    position:relative;
+    background:#9ecfcf;
+    border:1px solid #6fa8a8;
+    border-radius:5px;
+    padding:9px 10px;
+    font-size:12px;
+    line-height:1.4;
+    margin:16px 0 0 14px;
+    box-shadow:0 1px 2px rgba(0,0,0,.08);
+  }
+  .item::before{
+    content:'';
+    position:absolute;
+    left:-16px;
+    top:50%;
+    width:16px;
+    height:2px;
+    background:#333;
+  }
+  .item:first-child{margin-top:0;}
+
+  .item.deliv{
+    background:#c9e3a8;
+    border-color:#9bc473;
+  }
+
+  .legend-row{
+    display:flex; gap:22px; margin-top:34px; flex-wrap:wrap; font-size:12.5px; color:#3a3f43;
+  }
+  .swatch{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px;}
+
+  footer{text-align:center;color:#8b9299;font-size:12px;margin-top:40px;font-family:monospace;}
+
+  @media (max-width:1100px){
+    .columns{flex-direction:column; gap:36px;}
+    .col-stem{display:none;}
+    .hbar{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Декомпозиция проекта — Sentry Push</h1>
+  <p class="sub">WBS по пяти фазам жизненного цикла проекта (Initiation → Planning → Execution → Control → Closure). Бирюзовым — работы по продукту, зелёным — учебные деливерабли курса (практические занятия Round 1–6 и Final Round), выполненные на соответствующем этапе.</p>
+
+  <div class="chart">
+    <div class="root-row"><div class="root-box">Sentry Push — Проект</div></div>
+    <div class="trunk"></div>
+    <div class="hbar"></div>
+
+    <div class="columns">
+
+      <!-- INITIATION -->
+      <div class="col">
+        <div class="col-stem"></div>
+        <div class="phase-box phase-init">Initiation</div>
+        <div class="items">
+          <div class="item">Назначение Tech Lead и команды проекта</div>
+          <div class="item deliv">Round 1 — Идея проекта, MindMap, SMART-цели</div>
+          <div class="item deliv">Round 2 — PEST-анализ и 5 сил Портера</div>
+          <div class="item">Оценка осуществимости и ключевых рисков</div>
+        </div>
+      </div>
+
+      <!-- PLANNING -->
+      <div class="col">
+        <div class="col-stem"></div>
+        <div class="phase-box phase-plan">Planning</div>
+        <div class="items">
+          <div class="item deliv">Round 3 — Концепция продукта, MVP, Lean Canvas</div>
+          <div class="item deliv">Round 4 — Экономическое обоснование (COCOMO, CAPEX/OPEX)</div>
+          <div class="item deliv">Round 5 — Матрица Эйзенхауэра, WBS, RACI</div>
+          <div class="item">Формирование графика (5 спринтов, 01.09–31.10.2026)</div>
+          <div class="item">Настройка каналов коммуникации команды</div>
+        </div>
+      </div>
+
+      <!-- EXECUTION -->
+      <div class="col">
+        <div class="col-stem"></div>
+        <div class="phase-box phase-exec">Execution</div>
+        <div class="items">
+          <div class="item">Разработка detection engine (regex + entropy)</div>
+          <div class="item">Разработка git pre-push hook и CLI</div>
+          <div class="item">Логика approve / hold / reject, CLI/Slack-уведомления</div>
+          <div class="item">Whitelist-конфиг и аудит-лог</div>
+          <div class="item deliv">Round 6 — Проектирование бизнес-процессов (BPMN 2.0)</div>
+          <div class="item">Подготовка документации (установка, конфигурация)</div>
+        </div>
+      </div>
+
+      <!-- CONTROL -->
+      <div class="col">
+        <div class="col-stem"></div>
+        <div class="phase-box phase-ctrl">Control</div>
+        <div class="items">
+          <div class="item">Контроль скоупа MVP (запрет scope creep сверх v1.0)</div>
+          <div class="item">Контроль прогресса по спринтам (сверка план/факт)</div>
+          <div class="item">Тестирование точности детекции (цель ≥90%)</div>
+          <div class="item">Устранение ложных срабатываний, кроссплатформ. тесты</div>
+        </div>
+      </div>
+
+      <!-- CLOSURE -->
+      <div class="col">
+        <div class="col-stem"></div>
+        <div class="phase-box phase-close">Closure</div>
+        <div class="items">
+          <div class="item">Релиз MVP в open-source на GitHub</div>
+          <div class="item">Запуск с 10 пилотными командами</div>
+          <div class="item deliv">Final Round — Demo Day, Pitch Deck</div>
+          <div class="item">Сбор обратной связи и lessons learned</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="legend-row">
+    <span><span class="swatch" style="background:#9ecfcf;"></span>Работы по продукту</span>
+    <span><span class="swatch" style="background:#c9e3a8;"></span>Учебные деливерабли курса (Round 1–6, Final Round)</span>
+  </div>
+
+  <footer>sentry-push / wbs-phases.html · 01.09 – 31.12.2026</footer>
+</div>
+</body>
+</html>

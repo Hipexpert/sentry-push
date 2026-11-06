@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Sentry Push — RACI по фазам проекта</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#ffffff;
+    color:#14171a;
+    font-family:'Inter',sans-serif;
+    padding:46px 24px 70px;
+  }
+  .wrap{max-width:1220px;margin:0 auto;}
+
+  h1{font-size:22px;font-weight:800;margin:0 0 4px;}
+  .sub{color:#5b6670;font-size:13.5px;margin:0 0 26px;max-width:800px;line-height:1.5;}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    border:2px solid #14171a;
+  }
+  th, td{
+    border:1px solid #14171a;
+    padding:10px 12px;
+    text-align:center;
+    font-size:13px;
+  }
+  thead tr.top-header th{
+    background:#cfd3d6;
+    font-weight:800;
+    font-size:15px;
+    padding:14px;
+  }
+  thead tr.top-header th.corner{
+    text-align:left;
+    background:#cfd3d6;
+  }
+  thead tr.sub-header th{
+    background:#e6e8ea;
+    font-weight:700;
+    font-size:12px;
+    line-height:1.3;
+    padding:10px 8px;
+  }
+  thead tr.sub-header th.corner{
+    text-align:left;
+    background:#e6e8ea;
+    font-weight:800;
+    font-size:14px;
+  }
+  tbody td.activity{
+    text-align:left;
+    font-weight:600;
+    background:#fafafa;
+  }
+  tbody td.activity.deliv{
+    background:#eef6e5;
+  }
+  tbody td.phase{
+    text-align:left;
+    font-weight:800;
+    color:#fff;
+    font-size:13px;
+  }
+  .phase-init{background:#f4a227;}
+  .phase-plan{background:#d9b400;}
+  .phase-exec{background:#c45796;}
+  .phase-ctrl{background:#8f8e1e;}
+  .phase-close{background:#c4472b;}
+
+  tbody td.letter{
+    font-weight:700;
+    font-size:14px;
+  }
+  .R{color:#1a6b2e;}
+  .A{color:#a1251f;}
+  .C{color:#9a6a0c;}
+  .I{color:#2b5f8a;}
+
+  .legend{
+    margin-top:18px;
+    font-size:13px;
+    color:#3a3f43;
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .legend b{font-weight:800;}
+  .swatch{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px; background:#eef6e5; border:1px solid #c9e3a8;}
+
+  footer{text-align:center;color:#8b9299;font-size:12px;margin-top:28px;font-family:monospace;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>RACI Chart — Sentry Push (по фазам Initiation / Planning / Execution / Control / Closure)</h1>
+  <p class="sub">Обновлённая матрица на основе фазовой декомпозиции WBS. Строки с учебными деливераблами курса (Round 1–6, Final Round) выделены светло-зелёным фоном.</p>
+
+  <table>
+    <thead>
+      <tr class="top-header">
+        <th class="corner">RACI Chart</th>
+        <th colspan="6">Person</th>
+      </tr>
+      <tr class="sub-header">
+        <th class="corner">Activity</th>
+        <th>Tech Lead /<br>Backend(Denis)</th>
+        <th>Dev —<br>Git-интеграция(Matvei)</th>
+        <th>Dev —<br>Detection Engine(Igor)</th>
+        <th>QA /<br>Test-инженер(Igor)</th>
+        <th>DevOps /<br>Release(Matvei)</th>
+        <th>Product<br>Owner(Denis)</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr><td class="phase phase-init" colspan="7">Initiation</td></tr>
+      <tr>
+        <td class="activity">Назначение Tech Lead и команды проекта</td>
+        <td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity deliv">Round 1 — Идея проекта, MindMap, SMART-цели</td>
+        <td class="letter C">R</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity deliv">Round 2 — PEST-анализ и 5 сил Портера</td>
+        <td class="letter C">R</td><td class="letter I">R</td><td class="letter I">I</td><td class="letter I">R</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity">Оценка осуществимости и ключевых рисков</td>
+        <td class="letter R">R</td><td class="letter I">I</td><td class="letter C">C</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+
+      <tr><td class="phase phase-plan" colspan="7">Planning</td></tr>
+      <tr>
+        <td class="activity deliv">Round 3 — Концепция продукта, MVP, Lean Canvas</td>
+        <td class="letter C">R</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity deliv">Round 4 — Экономическое обоснование (COCOMO, CAPEX/OPEX)</td>
+        <td class="letter C">R</td><td class="letter I">R</td><td class="letter I">I</td><td class="letter I">R</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity deliv">Round 5 — Матрица Эйзенхауэра, WBS, RACI</td>
+        <td class="letter A">A</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter R">R</td>
+      </tr>
+      <tr>
+        <td class="activity">Формирование графика (5 спринтов, 01.09–31.10.2026)</td>
+        <td class="letter R">R</td><td class="letter C">C</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity">Настройка каналов коммуникации команды</td>
+        <td class="letter A">A</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter R">R</td><td class="letter I">I</td>
+      </tr>
+
+      <tr><td class="phase phase-exec" colspan="7">Execution</td></tr>
+      <tr>
+        <td class="activity">Разработка detection engine (regex + entropy)</td>
+        <td class="letter A">A</td><td class="letter I">I</td><td class="letter R">R</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td>
+      </tr>
+      <tr>
+        <td class="activity">Разработка git pre-push hook и CLI</td>
+        <td class="letter A">A</td><td class="letter R">R</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td>
+      </tr>
+      <tr>
+        <td class="activity">Логика approve / hold / reject, CLI/Slack-уведомления</td>
+        <td class="letter R">R</td><td class="letter C">C</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter C">C</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity">Whitelist-конфиг и аудит-лог</td>
+        <td class="letter A">A</td><td class="letter R">R</td><td class="letter C">C</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td>
+      </tr>
+      <tr>
+        <td class="activity deliv">Round 6 — Проектирование бизнес-процессов (BPMN 2.0)</td>
+        <td class="letter C">R</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity">Подготовка документации (установка, конфигурация)</td>
+        <td class="letter A">A</td><td class="letter C">C</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter R">R</td>
+      </tr>
+
+      <tr><td class="phase phase-ctrl" colspan="7">Control</td></tr>
+      <tr>
+        <td class="activity">Контроль скоупа MVP (запрет scope creep сверх v1.0)</td>
+        <td class="letter A">A</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter R">R</td>
+      </tr>
+      <tr>
+        <td class="activity">Контроль прогресса по спринтам (сверка план/факт)</td>
+        <td class="letter R">R</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity">Тестирование точности детекции (цель ≥90%)</td>
+        <td class="letter C">C</td><td class="letter I">I</td><td class="letter A">A</td><td class="letter R">R</td><td class="letter I">I</td><td class="letter I">I</td>
+      </tr>
+      <tr>
+        <td class="activity">Устранение ложных срабатываний, кроссплатформ. тесты</td>
+        <td class="letter A">A</td><td class="letter C">C</td><td class="letter C">C</td><td class="letter R">R</td><td class="letter C">C</td><td class="letter I">I</td>
+      </tr>
+
+      <tr><td class="phase phase-close" colspan="7">Closure</td></tr>
+      <tr>
+        <td class="activity">Релиз MVP в open-source на GitHub</td>
+        <td class="letter A">A</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter R">R</td><td class="letter I">I</td>
+      </tr>
+      <tr>
+        <td class="activity">Запуск с 10 пилотными командами</td>
+        <td class="letter A">A</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter R">R</td>
+      </tr>
+      <tr>
+        <td class="activity deliv">Final Round — Demo Day, Pitch Deck</td>
+        <td class="letter C">R</td><td class="letter I">R</td><td class="letter I">R</td><td class="letter I">R</td><td class="letter I">R</td><td class="letter A">A</td>
+      </tr>
+      <tr>
+        <td class="activity">Сбор обратной связи и lessons learned</td>
+        <td class="letter A">A</td><td class="letter I">I</td><td class="letter I">I</td><td class="letter C">C</td><td class="letter I">I</td><td class="letter R">R</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="legend">
+    <span><b class="R">R</b> = Responsible</span>
+    <span><b class="A">A</b> = Accountable</span>
+    <span><b class="C">C</b> = Consult</span>
+    <span><b class="I">I</b> = Inform</span>
+    <span><span class="swatch"></span>учебный деливерабл курса (Round 1–6, Final Round)</span>
+  </div>
+
+  <footer>sentry-push / raci-phases.html</footer>
+</div>
+</body>
+</html>

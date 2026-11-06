@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Sentry Push — Матрица Эйзенхауэра</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg: #d7f0f9;
+    --a-bg: #ffffff;
+    --b-bg: #a9ddf5;
+    --c-bg: #ffd9a0;
+    --d-bg: #3d7f9e;
+    --text-dark: #14171a;
+    --text-light: #ffffff;
+    --muted-dark: #4a5257;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--text-dark);
+    font-family:'Inter',sans-serif;
+    padding:48px 24px 70px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+
+  header{margin-bottom:28px; text-align:left;}
+  h1{font-size:26px;margin:0 0 6px;font-weight:800;color:#0f2a35;}
+  header p{margin:0;color:#3a5a66;font-size:14.5px;}
+
+  .grid-outer{
+    display:grid;
+    grid-template-columns: 70px 1fr 1fr;
+    grid-template-rows: 54px 1fr 1fr;
+    gap:14px;
+    background:var(--bg);
+    border-radius:16px;
+    padding:18px;
+  }
+  .col-header{
+    grid-row:1;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; font-weight:800; color:#0f2a35;
+  }
+  .col-urgent{grid-column:2;}
+  .col-not-urgent{grid-column:3;}
+
+  .row-label{
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; font-weight:800; color:#0f2a35;
+  }
+  .row-important{grid-row:2; grid-column:1;}
+  .row-not-important{grid-row:3; grid-column:1;}
+
+  .cell{
+    border-radius:14px;
+    padding:22px 24px;
+    display:flex;
+    flex-direction:column;
+  }
+  .cell .letter{
+    font-size:30px; font-weight:800; margin-bottom:10px;
+  }
+  .cell .label{
+    font-size:13.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+    margin-bottom:14px; opacity:.85;
+  }
+  .cell ul{margin:0; padding-left:20px; font-size:13.8px; line-height:1.6;}
+  .cell ul li{margin-bottom:7px;}
+  .cell ul li:last-child{margin-bottom:0;}
+
+  .cell-a{grid-row:2; grid-column:2; background:var(--a-bg); color:var(--text-dark); border:1px solid #e3eef2;}
+  .cell-b{grid-row:2; grid-column:3; background:var(--b-bg); color:var(--text-dark);}
+  .cell-c{grid-row:3; grid-column:2; background:var(--c-bg); color:var(--text-dark);}
+  .cell-d{grid-row:3; grid-column:3; background:var(--d-bg); color:var(--text-light);}
+
+  .cell-a .letter{color:#1a6b8a;}
+  .cell-b .letter{color:#0f5c7d;}
+  .cell-c .letter{color:#8a5a12;}
+  .cell-d .letter{color:#ffffff;}
+
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; margin-top:16px;
+  }
+  .tag-a{background:#1a6b8a; color:#fff;}
+  .tag-b{background:#0f5c7d; color:#fff;}
+  .tag-c{background:#8a5a12; color:#fff;}
+  .tag-d{background:rgba(255,255,255,.25); color:#fff;}
+
+  footer{text-align:center;color:#3a5a66;font-size:12px;margin-top:28px;}
+
+  @media (max-width:760px){
+    .grid-outer{grid-template-columns: 40px 1fr 1fr;}
+    h1{font-size:21px;}
+    .cell{padding:16px 16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Матрица Эйзенхауэра — Sentry Push</h1>
+    <p>Приоритизация задач на этапе MVP v1.0 (01.09 – 31.10.2026)</p>
+  </header>
+
+  <div class="grid-outer">
+    <div class="col-header col-urgent">Срочно</div>
+    <div class="col-header col-not-urgent">Не срочно</div>
+
+    <div class="row-label row-important">Важно</div>
+    <div class="row-label row-not-important">Не важно</div>
+
+    <!-- A: Important & Urgent -->
+    <div class="cell cell-a">
+      <div class="letter">A</div>
+      <div class="label">Делать сейчас</div>
+      <ul>
+        <li>Довести точность детекции секретов до ≥90% на тестовом датасете из 200 примеров</li>
+        <li>Исправить критические ложные срабатывания, блокирующие пилотные команды</li>
+        <li>Реализовать решение approve / hold / reject с уведомлением в CLI</li>
+        <li>Подготовить релиз MVP на GitHub к 31.10.2026 (документация по установке)</li>
+      </ul>
+      <span class="tag tag-a">дедлайн в этом спринте</span>
+    </div>
+
+    <!-- B: Important & Not urgent -->
+    <div class="cell cell-b">
+      <div class="letter">B</div>
+      <div class="label">Планировать</div>
+      <ul>
+        <li>Архитектура MCP-прокси для перехвата запросов к AI-агентам (v2.0)</li>
+        <li>Подготовка к EU Cyber Resilience Act (SBOM, процесс раскрытия уязвимостей)</li>
+        <li>Построение community вокруг open-source ядра</li>
+        <li>Поиск и выстраивание отношений с первыми 10 пилотными командами</li>
+      </ul>
+      <span class="tag tag-b">стратегический приоритет</span>
+    </div>
+
+    <!-- C: Not important & Urgent -->
+    <div class="cell cell-c">
+      <div class="letter">C</div>
+      <div class="label">Делегировать / минимизировать</div>
+      <ul>
+        <li>Ответы на мелкие вопросы и issues в GitHub-репозитории</li>
+        <li>Настройка Slack-webhook для тестового окружения</li>
+        <li>Форматирование и мелкая правка README/документации</li>
+        <li>Подготовка пакета документов на регистрацию программы для ЭВМ</li>
+      </ul>
+      <span class="tag tag-c">шум, но требует внимания</span>
+    </div>
+
+    <!-- D: Not important & Not urgent -->
+    <div class="cell cell-d">
+      <div class="letter">D</div>
+      <div class="label">Отложить</div>
+      <ul>
+        <li>Веб-дашборд и централизованная аналитика по командам</li>
+        <li>Интеграции с SIEM-системами и Jira</li>
+        <li>Проработка брендинга, логотипа, фирменного стиля</li>
+        <li>Регистрация товарного знака «Sentry Push»</li>
+      </ul>
+      <span class="tag tag-d">можно отложить до product-market fit</span>
+    </div>
+
+  </div>
+
+  <footer>sentry-push / eisenhower-matrix.html</footer>
+</div>
+</body>
+</html>
