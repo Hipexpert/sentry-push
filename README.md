@@ -1,2 +1,2 @@
 # sentry-push
-Web-hook utility for secret extraction
+Git push hook utility for secret extraction
